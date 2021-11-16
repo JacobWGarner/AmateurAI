@@ -58,7 +58,7 @@ namespace AmateurAI.BinaryClassifiers
                 //Initialize the weights with small random values.
                 this.Weights = new float[size];
 
-                for (int i = 0; i < Weights.Length; i++)
+                for (int i = 0; i < Size; i++)
                 {
                     this.Weights[i] = SmallRandomFloat(rand);
                 }
@@ -130,7 +130,7 @@ namespace AmateurAI.BinaryClassifiers
                 float error = expectedOutput - output;
 
                 //Update the weights and bias.
-                for (int i = 0; i < Weights.Length; i++)
+                for (int i = 0; i < Size; i++)
                 {
                     Weights[i] = Weights[i] + LearningRate * error * input[i];
                 }
