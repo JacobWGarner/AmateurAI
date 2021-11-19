@@ -157,28 +157,38 @@ namespace AmateurAI.BinaryClassifiers
         /// 70, 30, etc.)</returns>
         public float TrainBatch(float[][] inputs, float[] expectedOutputs)
         {
-            float errorSum = 0;
-
-            for (int i = 0; i < inputs.Length; i++)
+            //Check that the arguments passed are valid.
+            if (inputs[0].Length == Size)
             {
-                errorSum += Train(inputs[i], expectedOutputs[i]);
+                float errorSum = 0;
+
+                for (int i = 0; i < inputs.Length; i++)
+                {
+                    errorSum += Train(inputs[i], expectedOutputs[i]);
+                }
+
+                #region Programmer's note
+
+                /*=================================================================
+                 * The error sum is incremented by one every time the perceptron 
+                 * gives a wrong answer to a training example. Therefore, the 
+                 * formula for calculating the accuracy is:
+                 * 
+                 * (Number of correct answers / Number of training examples) * 100 
+                 * 
+                 * Number of correct answers = 
+                 *      Number of training examples - number of wrong answers
+                 *///==============================================================
+
+                #endregion
+                return ((inputs.Length - errorSum) / inputs.Length) * 100;
             }
 
-            #region Programmer's note
-
-            /*=================================================================
-             * The error sum is incremented by one every time the perceptron 
-             * gives a wrong answer to a training example. Therefore, the 
-             * formula for calculating the accuracy is:
-             * 
-             * (Number of correct answers / Number of training examples) * 100 
-             * 
-             * Number of correct answers = 
-             *      Number of training examples - number of wrong answers
-             *///==============================================================
-
-            #endregion
-            return ((inputs.Length - errorSum) / inputs.Length) * 100;
+            else
+            {
+                throw new Exception("The length of any input " +
+                    "(float[] inputs) and Size (Perceptron.Size) must match.");
+            }
         }
 
         /// <summary>
