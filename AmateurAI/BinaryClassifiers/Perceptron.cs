@@ -148,6 +148,40 @@ namespace AmateurAI.BinaryClassifiers
         }
 
         /// <summary>
+        /// Trains the perceptron on a batch of training examples.
+        /// </summary>
+        /// <param name="inputs">The inputs from each training example.</param>
+        /// <param name="expectedOutputs">The outputs expected from the 
+        /// perceptron given each training example input.</param>
+        /// <returns>The accuracy of the perceptron as a percent value (i.e. 
+        /// 70, 30, etc.)</returns>
+        public float TrainBatch(float[][] inputs, float[] expectedOutputs)
+        {
+            float errorSum = 0;
+
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                errorSum += Train(inputs[i], expectedOutputs[i]);
+            }
+
+            #region Programmer's note
+
+            /*=================================================================
+             * The error sum is incremented by one every time the perceptron 
+             * gives a wrong answer to a training example. Therefore, the 
+             * formula for calculating the accuracy is:
+             * 
+             * (Number of correct answers / Number of training examples) * 100 
+             * 
+             * Number of correct answers = 
+             *      Number of training examples - number of wrong answers
+             *///==============================================================
+
+            #endregion
+            return ((inputs.Length - errorSum) / inputs.Length) * 100;
+        }
+
+        /// <summary>
         /// Generates a small random value, ranging from -0.9 to 0.9.
         /// </summary>
         /// <param name="rand">Used to generate random values.</param>
@@ -170,7 +204,7 @@ namespace AmateurAI.BinaryClassifiers
 
         #region Sources
 
-        /*Sources used while developing:
+        /* Sources used while developing:
          * 
          * 3blue1brown - General conecpt and math for calculating the output: 
          * https://youtu.be/aircAruvnKk?t=519
